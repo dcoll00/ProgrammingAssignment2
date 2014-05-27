@@ -15,6 +15,12 @@ makeCacheMatrix <- function(x= matrix(1:1,1)) {
   
   ## this will see if m exists and if it doesn't
   ##  it will initialize the varible for use
+  
+  ## REVIEW COMMENT -->
+  ## The exists check it not necessary here because this part of 
+  ## the function is only executed when a new matrix object is 
+  ## created (and then it's fine to set it to NULL).
+  ## <-- REVIEW COMMENT
   if (!exists("m")){
     m <<- NULL
   }
@@ -27,6 +33,12 @@ makeCacheMatrix <- function(x= matrix(1:1,1)) {
   ##  m.
   ## First check to see if the previous matrix exists.  If it does, check it
   ##  If it doesn't, set m
+  
+  ## REVIEW COMMENT -->
+  ## You could use the identical() function here to check whether x and lstmat 
+  ## are the same.
+  ## A better place to put this check would have been the set function.
+  ## <-- REVIEW COMMENT
   if(exists("lstmat")) {
     if (nrow(x)!=nrow(lstmat) | ncol(x)!=ncol(lstmat)){
       m <<- NULL
@@ -78,6 +90,10 @@ cacheSolve <- function(x, ...) {
   x$setinverse(m)
   
   ## This will save the matrix just processed to compare against the next one
+  ## REVIEW COMMENT -->
+  ## The lstmat value set here will not be accessible in makeCacheMatrix because this is 
+  ## not the parent environment for makeCacheMatrix!
+  ## <-- REVIEW COMMENT
   lstmat <<- data
   
   ## return the inverse
